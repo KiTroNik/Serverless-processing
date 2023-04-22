@@ -16,11 +16,11 @@ def fetch_for_processing():
     request_data: dict = app.current_event.json_body
     fact = _fetch_fact()
     request_data["fact"] = fact.json()["text"]
+
     csv_string_object = _create_csv_from_dict(request_data)
     file_name = f"{fact.json()['id']}.csv"
-    s3.put_object(
-        Bucket="bucket_name", Key=file_name, Body=csv_string_object
-    )
+
+    s3.put_object(Bucket="bucket_name", Key=file_name, Body=csv_string_object)
 
     return {"fact": fact.json(), "email": request_data["email"]}
 
