@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Handler: handler.handler
+    Runtime: python3.10
+
+Resources:
+  ServerlessProjectLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: .
+      CompatibleRuntimes:
+        - python3.10
+    Metadata:
+      BuildMethod: makefile
+
+  FetchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/fetch
+      Layers:
+        - !Ref ServerlessProjectLayer
+
+  ProcessFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/process
+      Layers:
+        - !Ref ServerlessProjectLayer
+
+  ReadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/read
+      Layers:
+        - !Ref ServerlessProjectLayer

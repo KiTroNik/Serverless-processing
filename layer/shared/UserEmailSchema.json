@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "UserEmailModel",
+    "type": "object",
+    "properties": {
+        "email":{
+            "type":"string",
+            "format":"email"
+        }
+    },
+    "required": ["email"]
+}
