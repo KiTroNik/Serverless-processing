@@ -20,7 +20,7 @@ def fetch_for_processing():
     csv_string_object = _create_csv_from_dict(request_data)
     file_name = f"{fact.json()['id']}.csv"
 
-    s3.put_object(Bucket="bucket_name", Key=file_name, Body=csv_string_object)
+    s3.put_object(Bucket="bucket_name", Key=file_name, Body=csv_string_object)  # todo: change bucket_name to your bucket
 
     return {"fact": fact.json(), "email": request_data["email"]}
 

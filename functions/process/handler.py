@@ -21,6 +21,8 @@ def handler(event: dict, context: LambdaContext) -> dict:
                 "body": json.dumps("Test event detected. Ignoring."),
             }
 
+        payload = payload["Records"][0]
+
         bucket_name = payload["s3"]["bucket"]["name"]
         object_name = payload["s3"]["object"]["key"]
 
@@ -68,7 +70,7 @@ def _send_user_ses_email(user_email: str, item_id: str):
             "Body": {
                 "Text": {
                     "Charset": "UTF-8",
-                    "Data": f"You can access processed data by id f{item_id}",
+                    "Data": f"You can access processed data by id {item_id}",
                 }
             },
             "Subject": {
@@ -76,6 +78,6 @@ def _send_user_ses_email(user_email: str, item_id: str):
                 "Data": "Your request has been proccessed succesfully.",
             },
         },
-        Source="SourceEmailAddress",
+        Source="SourceEmailAddress",  # todo: Change it to your verified SES identity
     )
     return response["MessageId"]
